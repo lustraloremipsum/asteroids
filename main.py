@@ -11,6 +11,11 @@ def main():
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pyclock = pygame.time.Clock()
     dt = 0
+    updatable = pygame.sprite.Group()
+    drawable = pygame.sprite.Group()
+
+    # This is weird - why not just define it in the class?
+    Player.containers = (updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)
 
@@ -21,8 +26,10 @@ def main():
                 return
         
         screen.fill(0, None, 0)
-        player.update(dt)
-        player.draw(screen)
+        for thing in updatable:
+            thing.update(dt)
+        for thing in drawable:
+            thing.draw(screen)
         pygame.display.flip()
         
         dt = pyclock.tick(60) / 1000   # 60 fps, each tick is 1/60th of a second
