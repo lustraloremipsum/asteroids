@@ -43,6 +43,10 @@ def main():
             if roid.collision(player):
                 print("Game over!")
                 sys.exit()
+            for shot in shots:
+                if roid.collision(shot):
+                    roid.split()
+                    shot.kill()
         
         # redisplay all
         screen.fill(0, None, 0)
